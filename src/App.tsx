@@ -30,6 +30,7 @@ function App() {
   const [problem, setProblem] = useState(problemGenerater(4));
   const [nowScore, setNowScore] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(0);
+  const [message, setMessage] = useState<string>('');
 
   // 入力
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,11 +40,13 @@ function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(problem.num.toString()===inputValue){
-      alert("Correct!");
+      // alert("Correct!");
+      setMessage('Correct!');
       setNowScore(nowScore+problem.point);
       setProblem(problemGenerater(4)); // 問題を再設定
     }else{
-      alert(`Incorrect\nCorrect answer:${problem.num}`);
+      // alert(`Incorrect\nCorrect answer:${problem.num}`);
+      setMessage('Incorrect!');
     }
     setInputValue(''); // フォームの値をクリアする
   };
@@ -55,17 +58,20 @@ function App() {
         <h3>highScore: {highScore} | Score: {nowScore}</h3>
       </header>
       <body className="Game">
-        <p>{problem.binStr}</p>
-      </body>
+        <h3 className="Problem-display">{problem.binStr}</h3>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Submit</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <button type="submit">Submit</button>
+        </form>
+
+        <h2 className="Messages">{message}</h2>
+
+      </body>
 
     </div>
   );

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 interface Problem {
@@ -26,18 +25,13 @@ function problemGenerater(prob_len: number) {
   return {num: num_10, binStr:bin_str, point:prob_len};
 }
 
-// var nowScore = 0;
-// var highScore = 0;
-// var newProblem: boolean = true;
-
 function App() {
   const [inputValue, setInputValue] = useState<string>('');
   const [problem, setProblem] = useState(problemGenerater(4));
   const [nowScore, setNowScore] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(0);
-  const [newProblem, setNewProblem] = useState<boolean>(false);
 
-
+  // 入力
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };

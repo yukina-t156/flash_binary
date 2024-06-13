@@ -55,7 +55,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>フラッシュ2進数</h1>
-        <h3>highScore: {highScore} | Score: {nowScore}</h3>
+        <h2> Score: {nowScore} </h2>
       </header>
       <body className="Game">
         <h3 className="Problem-display">{problem.binStr}</h3>

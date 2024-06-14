@@ -7,6 +7,13 @@ interface Problem {
   point: number;
 }
 
+interface ProblemSet {
+  level: number;
+  numOfQ: number;
+  lenOfQ: number;
+  timeLimit: number;  
+}
+
 // 2進数でlen桁になる10進数の数字をランダムで取得
 function getRandomNbitNumber(len: number) {
   // prob_len桁での最大値 -> pow(2, prob_len-1)
@@ -26,11 +33,13 @@ function problemGenerater(prob_len: number) {
 }
 
 function App() {
+  const [probSet, setProblemSet] = useState<ProblemSet>({level:1, numOfQ:10, lenOfQ:8, timeLimit:60});
   const [inputValue, setInputValue] = useState<string>('');
-  const [problem, setProblem] = useState(problemGenerater(4));
+  const [problem, setProblem] = useState(problemGenerater(probSet.numOfQ));
   const [nowScore, setNowScore] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(0);
   const [message, setMessage] = useState<string>('');
+  const [incorrectCounter, setIncorrectCounter] = useState<number>(0);
 
   // 入力
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +52,12 @@ function App() {
       // alert("Correct!");
       setMessage('Correct!');
       setNowScore(nowScore+problem.point);
-      setProblem(problemGenerater(4)); // 問題を再設定
+      setProblem(problemGenerater(probSet.numOfQ)); // 問題を再設定
+      setIncorrectCounter(0);
     }else{
       // alert(`Incorrect\nCorrect answer:${problem.num}`);
-      setMessage('Incorrect!');
+      setIncorrectCounter(incorrectCounter+1);
+      setMessage((incorrectCounter<2)?`Incorrect!`:`Incorrect!\nAnswer=${problem.num}`);
     }
     setInputValue(''); // フォームの値をクリアする
   };
